@@ -1,0 +1,9 @@
+pytest>=7.0.1
+setuptools>=60.9.3
+MetaTrader5>=5.0.37
+python-dotenv>=0.20.0
+supportLibEasyT>=0.1.0
+binancespoteasyt
+metatrader5easyt
+python-dateutil>=2.8.2
+pandas>=1.4.2
