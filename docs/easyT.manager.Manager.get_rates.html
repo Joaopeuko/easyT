@@ -69,25 +69,22 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="easyT.manager.Manager.get_rates">
 <span class="sig-prename descclassname"><span class="pre">Manager.</span></span><span class="sig-name descname"><span class="pre">get_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.get_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.get_rates" title="Permalink to this definition"></a></dt>
-<dd><blockquote>
-<div><p>This function will use the platform attribute to return the correct class between the options in the Class
+<dd><p>This function will use the platform attribute to return the correct class between the options in the Class
 Platforms.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><dl class="simple">
-<dt>symbol:</dt><dd><p>The symbol you want to retrieve previous data.</p>
-</dd>
-<dt>timeframe (TimeFrame):</dt><dd><p>The timeframe you want information, like 1 minute, 5 minute, 1 week.</p>
-</dd>
-<dt>count:</dt><dd><p>It is the amount of information in the past you want. If your time frame is 5 minutes and your count is 4,
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> – The symbol you want to retrieve previous data.</p></li>
+<li><p><strong>timeframe</strong> (<em>TimeFrame</em>) – The timeframe you want information, like 1 minute, 5 minute, 1 week.</p></li>
+<li><p><strong>count</strong> – It is the amount of information in the past you want. If your time frame is 5 minutes and your count is 4,
 it will return 4 values containing time, open, high, low, close, tick_volume information of this past 4
-candlesticks.</p>
+candlesticks.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>It returns the class already invoked.</p>
 </dd>
 </dl>
-</dd>
-<dt>Returns:</dt><dd><p>It returns the class already invoked.</p>
-</dd>
-</dl>
-</div></blockquote>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
