@@ -152,7 +152,7 @@ class Manager:
         Returns:
             It returns the class already invoked.
 
-       Examples:
+        Examples:
 
             >>> from easyT.manager import Manager
             >>> symbol = 'BTCUSDT'
@@ -187,7 +187,7 @@ class Manager:
         Returns:
             It returns the class already invoked.
 
-       Examples:
+        Examples:
 
             >>> from easyT.manager import Manager
             >>> symbol = 'BTCUSDT'
@@ -217,7 +217,7 @@ class Manager:
         Returns:
             It returns the class already invoked.
 
-       Examples:
+        Examples:
 
             >>> from easyT.manager import Manager
             >>> symbol = 'BTCUSDT'
@@ -242,7 +242,7 @@ class Manager:
         Returns:
             It returns the class already invoked.
 
-       Examples:
+        Examples:
 
             >>> from easyT.manager import Manager
             >>> symbol = 'BTCUSDT'
@@ -286,7 +286,7 @@ class Manager:
         Returns:
             It returns the class already invoked.
 
-       Examples:
+        Examples:
 
             >>> from easyT.manager import Manager
             >>> symbol = 'BTCUSDT'
