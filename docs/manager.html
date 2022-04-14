@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager &mdash; easyT 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="easyT.manager.Manager.allowed_to_trade" href="manager/easyT.manager.Manager.allowed_to_trade.html" />
+    <link rel="prev" title="Initialization" href="initialization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> easyT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="easyT.html">Summary</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.allowed_to_trade.html">easyT.manager.Manager.allowed_to_trade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.get_initialize.html">easyT.manager.Manager.get_initialize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.get_rates.html">easyT.manager.Manager.get_rates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.get_tick.html">easyT.manager.Manager.get_tick</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.get_timeframe.html">easyT.manager.Manager.get_timeframe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.set_platform.html">easyT.manager.Manager.set_platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/easyT.manager.Manager.supervise.html">easyT.manager.Manager.supervise</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rates.html">Rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeframe.html">Timeframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trade.html">Trade</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">easyT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="easyT.html">Summary</a> &raquo;</li>
+      <li>Manager</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/manager.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="manager">
+<h1>Manager<a class="headerlink" href="#manager" title="Permalink to this headline"></a></h1>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easyT.manager.Manager.allowed_to_trade" title="easyT.manager.Manager.allowed_to_trade"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.allowed_to_trade</span></code></a></p></td>
+<td><p>This function return the information if your algotrading is allowed to trade or not, it is controled by the manager class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easyT.manager.Manager.get_initialize" title="easyT.manager.Manager.get_initialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.get_initialize</span></code></a></p></td>
+<td><p>This function will use the platform attribute to return the correct class between the options in the Class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easyT.manager.Manager.get_rates" title="easyT.manager.Manager.get_rates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.get_rates</span></code></a></p></td>
+<td><p>This function will use the platform attribute to return the correct class between the options in the Class</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easyT.manager.Manager.get_tick" title="easyT.manager.Manager.get_tick"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.get_tick</span></code></a></p></td>
+<td><p>This function will use the platform attribute to return the correct class between the options in the Class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easyT.manager.Manager.get_timeframe" title="easyT.manager.Manager.get_timeframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.get_timeframe</span></code></a></p></td>
+<td><p>This function will use the platform attribute to return the correct class between the options in the Class</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#easyT.manager.Manager.set_platform" title="easyT.manager.Manager.set_platform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.set_platform</span></code></a></p></td>
+<td><p>This function is used to set the platform to the manager, the platform will be used for many functions to know witch class to return and more.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#easyT.manager.Manager.supervise" title="easyT.manager.Manager.supervise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager.supervise</span></code></a></p></td>
+<td><p>These functions should be calling inside the while True looping, it is responsible to updates information like</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="easyT.manager.Manager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easyT.manager.</span></span><span class="sig-name descname"><span class="pre">Manager</span></span><a class="reference internal" href="_modules/easyT/manager.html#Manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager._supervise_trading_time">
+<span class="sig-name descname"><span class="pre">_supervise_trading_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager._supervise_trading_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager._supervise_trading_time" title="Permalink to this definition"></a></dt>
+<dd><p>It checks the trading time window to see if the algotrading is allowed to trade or if it should close
+opened position.</p>
+<p>There is no need to inform this information, but keep in mid the Algotrading might not work as expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>It updates the trade class, informing if it is allowed to trade or not, and, close position if the
+time passed a determined time that you set to have position opened.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager._supervise_updates">
+<span class="sig-name descname"><span class="pre">_supervise_updates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager._supervise_updates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager._supervise_updates" title="Permalink to this definition"></a></dt>
+<dd><p>This class call the updates for Tick and Rates if they exist, that mean, there are NOT None!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>It updates the Tick and Rates if possible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.allowed_to_trade">
+<span class="sig-name descname"><span class="pre">allowed_to_trade</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/easyT/manager.html#Manager.allowed_to_trade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.allowed_to_trade" title="Permalink to this definition"></a></dt>
+<dd><p>This function return the information if your algotrading is allowed to trade or not, it is controled by the
+manager class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>It returns True or False, True if your algotrading is allowed to trade or False if not.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#easyT.manager.ClassNotInvoked" title="easyT.manager.ClassNotInvoked"><strong>ClassNotInvoked</strong></a><strong>(</strong><strong>)</strong> – The error occur when it tries tro return the trade._trade_allowed information before the trade
+    be invoked, call the get_trade() first.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The Trade class need to be invoked to test the allowed_to_trade(), if it was not done, an error will</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># occur</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">allowed_to_trade</span><span class="p">()</span>
+<span class="go">easyT.manager.ClassNotInvoked</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_trade</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">lot</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">stop_loss</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">take_profit</span><span class="o">=</span><span class="mf">0.00</span><span class="p">)</span>
+<span class="go">&lt;binanceSpotEasyT.trade.Trade object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">allowed_to_trade</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.get_initialize">
+<span class="sig-name descname"><span class="pre">get_initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.get_initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.get_initialize" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function will use the platform attribute to return the correct class between the options in the Class
+Platforms.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>It returns the class already invoked.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_initialize</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.get_rates">
+<span class="sig-name descname"><span class="pre">get_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.get_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.get_rates" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function will use the platform attribute to return the correct class between the options in the Class
+Platforms.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>symbol:</dt><dd><p>The symbol you want to retrieve previous data.</p>
+</dd>
+<dt>timeframe (TimeFrame):</dt><dd><p>The timeframe you want information, like 1 minute, 5 minute, 1 week.</p>
+</dd>
+<dt>count:</dt><dd><p>It is the amount of information in the past you want. If your time frame is 5 minutes and your count is 4,
+it will return 4 values containing time, open, high, low, close, tick_volume information of this past 4
+candlesticks.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>It returns the class already invoked.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_initialize</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_rates</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">=</span><span class="s1">&#39;1m&#39;</span><span class="p">)</span>
+<span class="go">&lt;binanceSpotEasyT.rates.Rates object&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.get_tick">
+<span class="sig-name descname"><span class="pre">get_tick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.get_tick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.get_tick" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function will use the platform attribute to return the correct class between the options in the Class
+Platforms.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>symbol:</dt><dd><p>It is the symbol you want information about. You can have information about time, bid, ask, last, volume.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>It returns the class already invoked.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_initialize</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_tick</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
+<span class="go">&lt;binanceSpotEasyT.tick.Tick object&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.get_timeframe">
+<span class="sig-name descname"><span class="pre">get_timeframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.get_timeframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.get_timeframe" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function will use the platform attribute to return the correct class between the options in the Class
+Platforms.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>It returns the class already invoked.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_initialize</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_timeframe</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.timeframe.TimeFrame object&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.get_trade">
+<span class="sig-name descname"><span class="pre">get_trade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_loss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take_profit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.get_trade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.get_trade" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function will use the platform attribute to return the correct class between the options in the Class
+Platforms.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>symbol:</dt><dd><p>It is the symbol you want to open or close or check if already have an operation opened.</p>
+</dd>
+<dt>lot:</dt><dd><p>It is how many shares you want to trade, many symbols allow fractions and others requires a
+certain amount. It can be 0.01, 100.0, 1000.0, 10000.0.</p>
+</dd>
+<dt>stop_loss:</dt><dd><p>It is how much you accept to lose. Example: If you buy a share for US$10.00, and you accept to lose US$1.00
+you set this variable at 1.00, you will be out of the operation at US$9.00 (sometimes more, somtime less,
+the US$9.00 is the trigger). Keep in mind that some symbols has different points metrics, US$1.00 sometimes
+can be 1000 points.</p>
+</dd>
+<dt>take_profit:</dt><dd><p>It is how much you accept to win. Example: If you buy a share for US$10.00, and you accept to win US$1.00
+you set this variable at 1.00, you will be out of the operation at US$11.00 (sometimes more, somtime less,
+the US$11.00 is the trigger). Keep in mind that some symbols has different points metrics, US$1.00 sometimes
+can be 1000 points.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>It returns the class already invoked.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_initialize</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_trade</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">lot</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">stop_loss</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">take_profit</span><span class="o">=</span><span class="mf">0.00</span><span class="p">)</span>
+<span class="go">&lt;binanceSpotEasyT.trade.Trade object&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.set_platform">
+<span class="sig-name descname"><span class="pre">set_platform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/easyT/manager.html#Manager.set_platform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.set_platform" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to set the platform to the manager, the platform will be used for many functions
+to know witch class to return and more.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>platform</strong> – It can be of type Platforms, or it can be a string. It is up to you to decide. The class Platform was
+created to reduce the errors possibilities when writing the correct name of the platform.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>It returns None, but it saves the platform in an attribute.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.set_trading_time">
+<span class="sig-name descname"><span class="pre">set_trading_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_trade_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_trade_stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_position_close</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.set_trading_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.set_trading_time" title="Permalink to this definition"></a></dt>
+<dd><p>This function is responsible to set the trading time, when the time is in between the start and stop,
+trade is alowed, when in between in stop and position close, it is allowed to have a position opened, but it can
+not open a new one anymore.</p>
+<p>After the position close, it closes the position.</p>
+<p>Please, pay attention to the string time format, it uses a 24h format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_trade_start</strong> – The time that the algotrading can starts to trade.</p></li>
+<li><p><strong>time_trade_stop</strong> – The time that the algotrading stops to open position.</p></li>
+<li><p><strong>time_position_close</strong> – The time the algotrading closes opened position.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>It updates the atributes in constructors, returns None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_trading_time</span><span class="p">(</span><span class="n">time_trade_start</span><span class="o">=</span><span class="s1">&#39;09:00&#39;</span><span class="p">,</span> <span class="n">time_trade_stop</span><span class="o">=</span><span class="s1">&#39;17:30&#39;</span><span class="p">,</span> <span class="n">time_position_close</span><span class="o">=</span><span class="s1">&#39;17:45&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="easyT.manager.Manager.supervise">
+<span class="sig-name descname"><span class="pre">supervise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/easyT/manager.html#Manager.supervise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.Manager.supervise" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>These functions should be calling inside the while True looping, it is responsible to updates information like
+if the AlgoTrading is allowed to trade, if it needs to close the position, and to update the tick
+and the rates’ information.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>It updates attribute values.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">easyT.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;BTCUSDT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_platform</span><span class="p">(</span><span class="s1">&#39;binance-spot&#39;</span><span class="p">)</span>
+<span class="go">&#39;binance-spot&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_initialize</span><span class="p">()</span>
+<span class="go">&lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># It is important to know that the supervise needs the time set.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">supervise</span><span class="p">()</span>
+<span class="go">TypeError: &#39;&lt;=&#39; not supported between instances of &#39;datetime.datetime&#39; and &#39;NoneType&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">set_trading_time</span><span class="p">(</span><span class="n">time_trade_start</span><span class="o">=</span><span class="s1">&#39;09:00&#39;</span><span class="p">,</span> <span class="n">time_trade_stop</span><span class="o">=</span><span class="s1">&#39;17:30&#39;</span><span class="p">,</span> <span class="n">time_position_close</span><span class="o">=</span><span class="s1">&#39;17:45&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># It is important to know that it do not only need the trading time, but also, it needs the Tick() class</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># to retrieve the time!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">get_tick</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
+<span class="go">&lt;binanceSpotEasyT.tick.Tick object&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">supervise</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="easyT.manager.ClassNotInvoked">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">easyT.manager.</span></span><span class="sig-name descname"><span class="pre">ClassNotInvoked</span></span><a class="reference internal" href="_modules/easyT/manager.html#ClassNotInvoked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#easyT.manager.ClassNotInvoked" title="Permalink to this definition"></a></dt>
+<dd><p>Raise this error when the class is called but not invoked first!</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="initialization.html" class="btn btn-neutral float-left" title="Initialization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="manager/easyT.manager.Manager.allowed_to_trade.html" class="btn btn-neutral float-right" title="easyT.manager.Manager.allowed_to_trade" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Joao Paulo Euko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

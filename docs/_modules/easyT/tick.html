@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>easyT.tick</title>
+    
+          <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../_static/theme-vendors.js"></script> -->
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../genindex.html" />
+  <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../index.html" class="home-link">
+    
+      <span class="site-name">easyT</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../easyT.html#summary">summary</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../initialization.html" class="reference internal ">Initialization</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../manager.html" class="reference internal ">Manager</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../rates.html" class="reference internal ">Rates</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../tick.html" class="reference internal ">Tick</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../timeframe.html" class="reference internal ">Timeframe</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../trade.html" class="reference internal ">Trade</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">Module code</a> &raquo;</li>
+    
+    <li>easyT.tick</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Source code for easyT.tick</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">supportLibEasyT.log_manager</span> <span class="kn">import</span> <span class="n">LogManager</span>
+
+<span class="kn">from</span> <span class="nn">easyT.platforms</span> <span class="kn">import</span> <span class="n">Platforms</span>
+<span class="kn">from</span> <span class="nn">easyT.platforms</span> <span class="kn">import</span> <span class="n">NoPlatformFound</span>
+
+
+<div class="viewcode-block" id="get_tick"><a class="viewcode-back" href="../../tick.html#easyT.tick.get_tick">[docs]</a><span class="k">def</span> <span class="nf">get_tick</span><span class="p">(</span><span class="n">log</span><span class="p">:</span> <span class="n">LogManager</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function return the class that responsible to retrieve every tick information.</span>
+
+<span class="sd">    Tick class is the responsible to retrieve every tick information.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">         log:</span>
+<span class="sd">            The log receives a log handler to be able to log the information</span>
+
+<span class="sd">        platform:</span>
+<span class="sd">            It is the platform that the information will be returned.</span>
+
+<span class="sd">        symbol:</span>
+<span class="sd">         It is the symbol you want information about. You can have information about time, bid, ask, last, volume.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The class or Error message:</span>
+<span class="sd">        It returns the right class that will be used or an error message in case it was not found</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;get_tick called&#39;</span><span class="p">)</span>
+    <span class="n">platforms</span> <span class="o">=</span> <span class="n">Platforms</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="n">platforms</span><span class="o">.</span><span class="n">BINANCE_SPOT</span><span class="p">:</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;It is returning the platform </span><span class="si">{</span><span class="n">platforms</span><span class="o">.</span><span class="n">BINANCE_SPOT</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">binanceSpotEasyT.tick</span> <span class="kn">import</span> <span class="n">Tick</span>
+        <span class="k">return</span> <span class="n">Tick</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="n">platforms</span><span class="o">.</span><span class="n">METATRADER5</span><span class="p">:</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;It is returning the platform </span><span class="si">{</span><span class="n">platforms</span><span class="o">.</span><span class="n">METATRADER5</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">metatrader5EasyT.tick</span> <span class="kn">import</span> <span class="n">Tick</span>
+        <span class="k">return</span> <span class="n">Tick</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The </span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s1"> was not found, you can only use these options </span><span class="si">{</span><span class="n">platforms</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+                         <span class="sa">f</span><span class="s1">&#39;of type Platform or the values </span><span class="si">{</span><span class="n">platforms</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="si">}</span><span class="s1"> of type string, &#39;</span>
+                         <span class="sa">f</span><span class="s1">&#39;both are acceptable.&#39;</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="n">NoPlatformFound</span></div>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Joao Paulo Euko.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

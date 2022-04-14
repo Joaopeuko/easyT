@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easyT.manager &mdash; easyT 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> easyT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../easyT.html">Summary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">easyT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>easyT.manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for easyT.manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">easyT.tick</span> <span class="kn">import</span> <span class="n">get_tick</span>
+<span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">from</span> <span class="nn">easyT.rates</span> <span class="kn">import</span> <span class="n">get_rates</span>
+<span class="kn">from</span> <span class="nn">easyT.trade</span> <span class="kn">import</span> <span class="n">get_trade</span>
+<span class="kn">from</span> <span class="nn">easyT.platforms</span> <span class="kn">import</span> <span class="n">Platforms</span>
+<span class="kn">from</span> <span class="nn">supportLibEasyT</span> <span class="kn">import</span> <span class="n">log_manager</span>
+<span class="kn">from</span> <span class="nn">easyT.timeframe</span> <span class="kn">import</span> <span class="n">get_timeframe</span>
+<span class="kn">from</span> <span class="nn">easyT.initialization</span> <span class="kn">import</span> <span class="n">get_initialize</span>
+
+
+<div class="viewcode-block" id="ClassNotInvoked"><a class="viewcode-back" href="../../manager.html#easyT.manager.ClassNotInvoked">[docs]</a><span class="k">class</span> <span class="nc">ClassNotInvoked</span><span class="p">(</span><span class="ne">BaseException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Raise this error when the class is called but not invoked first!&quot;&quot;&quot;</span></div>
+
+
+<span class="k">class</span> <span class="nc">Manager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">log_manager</span><span class="o">.</span><span class="n">LogManager</span><span class="p">(</span><span class="s1">&#39;easyt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logger Initialized in Manager&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeframe</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># set rates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rates</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># set tick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tick</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># set trading class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trade</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># time management</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_trade_start</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_trade_stop</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_position_close</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Manager.allowed_to_trade"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.allowed_to_trade.html#easyT.manager.Manager.allowed_to_trade">[docs]</a>    <span class="k">def</span> <span class="nf">allowed_to_trade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function return the information if your algotrading is allowed to trade or not, it is controled by the</span>
+<span class="sd">        manager class.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It returns True or False, True if your algotrading is allowed to trade or False if not.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ClassNotInvoked():</span>
+<span class="sd">                The error occur when it tries tro return the trade._trade_allowed information before the trade</span>
+<span class="sd">                be invoked, call the get_trade() first.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; # The Trade class need to be invoked to test the allowed_to_trade(), if it was not done, an error will</span>
+<span class="sd">            &gt;&gt;&gt; # occur</span>
+<span class="sd">            &gt;&gt;&gt; manager.allowed_to_trade()</span>
+<span class="sd">            easyT.manager.ClassNotInvoked</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_trade(symbol=symbol, lot=0.01, stop_loss=0.00, take_profit=0.00)</span>
+<span class="sd">            &lt;binanceSpotEasyT.trade.Trade object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; manager.allowed_to_trade()</span>
+<span class="sd">            False</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;allowed_to_trade called&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;allowed_to_trade was called but trade class was not invoked,&#39;</span>
+                                   <span class="sa">f</span><span class="s1">&#39; call get_trade first!&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ClassNotInvoked</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade</span><span class="o">.</span><span class="n">_trade_allowed</span></div>
+
+<div class="viewcode-block" id="Manager.set_platform"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.set_platform.html#easyT.manager.Manager.set_platform">[docs]</a>    <span class="k">def</span> <span class="nf">set_platform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="n">Platforms</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is used to set the platform to the manager, the platform will be used for many functions</span>
+<span class="sd">        to know witch class to return and more.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">             platform:</span>
+<span class="sd">                It can be of type Platforms, or it can be a string. It is up to you to decide. The class Platform was</span>
+<span class="sd">                created to reduce the errors possibilities when writing the correct name of the platform.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             It returns None, but it saves the platform in an attribute.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Setting platform to </span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="n">platform</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span></div>
+
+    <span class="k">def</span> <span class="nf">set_trading_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_trade_start</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">time_trade_stop</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">time_position_close</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible to set the trading time, when the time is in between the start and stop,</span>
+<span class="sd">        trade is alowed, when in between in stop and position close, it is allowed to have a position opened, but it can</span>
+<span class="sd">        not open a new one anymore.</span>
+
+<span class="sd">        After the position close, it closes the position.</span>
+
+<span class="sd">        Please, pay attention to the string time format, it uses a 24h format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time_trade_start:</span>
+<span class="sd">                The time that the algotrading can starts to trade.</span>
+<span class="sd">            time_trade_stop:</span>
+<span class="sd">                The time that the algotrading stops to open position.</span>
+<span class="sd">            time_position_close:</span>
+<span class="sd">                The time the algotrading closes opened position.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It updates the atributes in constructors, returns None</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_trading_time(time_trade_start=&#39;09:00&#39;, time_trade_stop=&#39;17:30&#39;, time_position_close=&#39;17:45&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;set_trading_time for the times:&#39;</span>
+                              <span class="sa">f</span><span class="s1">&#39;Start: </span><span class="si">{</span><span class="n">time_trade_start</span><span class="si">}</span><span class="s1">, &#39;</span>
+                              <span class="sa">f</span><span class="s1">&#39;Stop: </span><span class="si">{</span><span class="n">time_trade_stop</span><span class="si">}</span><span class="s1">, &#39;</span>
+                              <span class="sa">f</span><span class="s1">&#39;Close Position </span><span class="si">{</span><span class="n">time_position_close</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_trade_start</span> <span class="o">=</span> <span class="n">time_trade_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_trade_stop</span> <span class="o">=</span> <span class="n">time_trade_stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_position_close</span> <span class="o">=</span> <span class="n">time_position_close</span>
+
+<div class="viewcode-block" id="Manager.get_initialize"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.get_initialize.html#easyT.manager.Manager.get_initialize">[docs]</a>    <span class="k">def</span> <span class="nf">get_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will use the platform attribute to return the correct class between the options in the Class</span>
+<span class="sd">        Platforms.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It returns the class already invoked.</span>
+
+<span class="sd">       Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_initialize()</span>
+<span class="sd">            &lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Get Initialize()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span> <span class="o">=</span> <span class="n">get_initialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span></div>
+
+<div class="viewcode-block" id="Manager.get_rates"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.get_rates.html#easyT.manager.Manager.get_rates">[docs]</a>    <span class="k">def</span> <span class="nf">get_rates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeframe</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will use the platform attribute to return the correct class between the options in the Class</span>
+<span class="sd">        Platforms.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            symbol:</span>
+<span class="sd">                The symbol you want to retrieve previous data.</span>
+
+<span class="sd">            timeframe (TimeFrame):</span>
+<span class="sd">                The timeframe you want information, like 1 minute, 5 minute, 1 week.</span>
+
+<span class="sd">            count:</span>
+<span class="sd">                It is the amount of information in the past you want. If your time frame is 5 minutes and your count is 4,</span>
+<span class="sd">                it will return 4 values containing time, open, high, low, close, tick_volume information of this past 4</span>
+<span class="sd">                candlesticks.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It returns the class already invoked.</span>
+
+<span class="sd">       Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_initialize()</span>
+<span class="sd">            &lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_rates(symbol=symbol, count=20, timeframe=&#39;1m&#39;)</span>
+<span class="sd">            &lt;binanceSpotEasyT.rates.Rates object&gt;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Get Rates()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rates</span> <span class="o">=</span> <span class="n">get_rates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">=</span><span class="n">timeframe</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rates</span></div>
+
+<div class="viewcode-block" id="Manager.get_tick"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.get_tick.html#easyT.manager.Manager.get_tick">[docs]</a>    <span class="k">def</span> <span class="nf">get_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will use the platform attribute to return the correct class between the options in the Class</span>
+<span class="sd">        Platforms.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            symbol:</span>
+<span class="sd">                It is the symbol you want information about. You can have information about time, bid, ask, last, volume.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It returns the class already invoked.</span>
+
+<span class="sd">       Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_initialize()</span>
+<span class="sd">            &lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_tick(symbol=symbol)</span>
+<span class="sd">            &lt;binanceSpotEasyT.tick.Tick object&gt;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Get Tick()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tick</span> <span class="o">=</span> <span class="n">get_tick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="n">symbol</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tick</span></div>
+
+<div class="viewcode-block" id="Manager.get_timeframe"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.get_timeframe.html#easyT.manager.Manager.get_timeframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_timeframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will use the platform attribute to return the correct class between the options in the Class</span>
+<span class="sd">        Platforms.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It returns the class already invoked.</span>
+
+<span class="sd">       Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_initialize()</span>
+<span class="sd">            &lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_timeframe()</span>
+<span class="sd">            &lt;binanceSpotEasyT.timeframe.TimeFrame object&gt;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Get TimeFrame()&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">get_timeframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">get_trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">lot</span><span class="p">,</span> <span class="n">stop_loss</span><span class="p">,</span> <span class="n">take_profit</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will use the platform attribute to return the correct class between the options in the Class</span>
+<span class="sd">        Platforms.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            symbol:</span>
+<span class="sd">                It is the symbol you want to open or close or check if already have an operation opened.</span>
+
+<span class="sd">            lot:</span>
+<span class="sd">                It is how many shares you want to trade, many symbols allow fractions and others requires a</span>
+<span class="sd">                certain amount. It can be 0.01, 100.0, 1000.0, 10000.0.</span>
+
+<span class="sd">            stop_loss:</span>
+<span class="sd">                It is how much you accept to lose. Example: If you buy a share for US$10.00, and you accept to lose US$1.00</span>
+<span class="sd">                you set this variable at 1.00, you will be out of the operation at US$9.00 (sometimes more, somtime less,</span>
+<span class="sd">                the US$9.00 is the trigger). Keep in mind that some symbols has different points metrics, US$1.00 sometimes</span>
+<span class="sd">                can be 1000 points.</span>
+
+<span class="sd">            take_profit:</span>
+<span class="sd">                It is how much you accept to win. Example: If you buy a share for US$10.00, and you accept to win US$1.00</span>
+<span class="sd">                you set this variable at 1.00, you will be out of the operation at US$11.00 (sometimes more, somtime less,</span>
+<span class="sd">                the US$11.00 is the trigger). Keep in mind that some symbols has different points metrics, US$1.00 sometimes</span>
+<span class="sd">                can be 1000 points.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It returns the class already invoked.</span>
+
+<span class="sd">       Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_initialize()</span>
+<span class="sd">            &lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_trade(symbol=symbol, lot=0.01, stop_loss=0.00, take_profit=0.00)</span>
+<span class="sd">            &lt;binanceSpotEasyT.trade.Trade object&gt;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Getting Trade()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trade</span> <span class="o">=</span> <span class="n">get_trade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">lot</span><span class="p">,</span> <span class="n">stop_loss</span><span class="p">,</span> <span class="n">take_profit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade</span>
+
+<div class="viewcode-block" id="Manager.supervise"><a class="viewcode-back" href="../../manager/easyT.manager.Manager.supervise.html#easyT.manager.Manager.supervise">[docs]</a>    <span class="k">def</span> <span class="nf">supervise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        These functions should be calling inside the while True looping, it is responsible to updates information like</span>
+<span class="sd">        if the AlgoTrading is allowed to trade, if it needs to close the position, and to update the tick</span>
+<span class="sd">        and the rates&#39; information.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It updates attribute values.</span>
+
+<span class="sd">       Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; from easyT.manager import Manager</span>
+<span class="sd">            &gt;&gt;&gt; symbol = &#39;BTCUSDT&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager = Manager()</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_platform(&#39;binance-spot&#39;)</span>
+<span class="sd">            &#39;binance-spot&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_initialize()</span>
+<span class="sd">            &lt;binanceSpotEasyT.initialization.Initialize object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; # It is important to know that the supervise needs the time set.</span>
+<span class="sd">            &gt;&gt;&gt; manager.supervise()</span>
+<span class="sd">            TypeError: &#39;&lt;=&#39; not supported between instances of &#39;datetime.datetime&#39; and &#39;NoneType&#39;</span>
+<span class="sd">            &gt;&gt;&gt; manager.set_trading_time(time_trade_start=&#39;09:00&#39;, time_trade_stop=&#39;17:30&#39;, time_position_close=&#39;17:45&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; # It is important to know that it do not only need the trading time, but also, it needs the Tick() class</span>
+<span class="sd">            &gt;&gt;&gt; # to retrieve the time!</span>
+<span class="sd">            &gt;&gt;&gt; manager.get_tick(symbol=symbol)</span>
+<span class="sd">            &lt;binanceSpotEasyT.tick.Tick object&gt;</span>
+<span class="sd">            &gt;&gt;&gt; manager.supervise()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supervise_updates</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tick</span><span class="o">.</span><span class="n">time</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supervise_trading_time</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_supervise_trading_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It checks the trading time window to see if the algotrading is allowed to trade or if it should close</span>
+<span class="sd">        opened position.</span>
+
+<span class="sd">        There is no need to inform this information, but keep in mid the Algotrading might not work as expected.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It updates the trade class, informing if it is allowed to trade or not, and, close position if the</span>
+<span class="sd">            time passed a determined time that you set to have position opened.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_trade_start</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_trade_stop</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trade</span><span class="o">.</span><span class="n">_trade_allowed</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_trade_start</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">&lt;=</span> <span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_trade_stop</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_position_close</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;</span> <span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_position_close</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trade</span><span class="o">.</span><span class="n">position_close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_supervise_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This class call the updates for Tick and Rates if they exist, that mean, there are NOT None!</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            It updates the Tick and Rates if possible.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tick</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tick</span><span class="o">.</span><span class="n">get_new_tick</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rates</span><span class="o">.</span><span class="n">update_rates</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Joao Paulo Euko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
