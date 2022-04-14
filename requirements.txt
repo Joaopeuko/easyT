@@ -3,7 +3,6 @@ pytest
 coverage
 setuptools
 pytest-cov
-MetaTrader5
 python-dotenv
 python-dateutil
 supportLibEasyT
