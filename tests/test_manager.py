@@ -99,8 +99,6 @@ class TestTrade:
         assert manager.time is not None
 
         manager.get_rates(20, 'btcusdt', '1m')
-        assert manager.rates.time is None
-        manager.supervise()
         assert manager.rates.time is not None
 
     def test_time(self):

@@ -203,6 +203,7 @@ class Manager:
 
         self._log.logger.info(f'Get Rates()')
         self.rates = get_rates(self._log, self.platform, count=count, symbol=symbol, timeframe=timeframe)
+        self.rates.update_rates()
         return self.rates
 
     def get_tick(self, symbol: str):
@@ -232,6 +233,7 @@ class Manager:
         """
         self._log.logger.info(f'Get Tick()')
         self.tick = get_tick(self._log, self.platform, symbol.upper())
+        self.tick.get_new_tick()
         return self.tick
 
     def get_timeframe(self):
