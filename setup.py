@@ -17,4 +17,10 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     packages=setuptools.find_packages(),
     install_requires=[requirement for requirement in requirements],
+    entry_points={
+        "console_scripts": [
+            "easyt = easyT.file_generator:main",
+
+        ],
+    },
 )
