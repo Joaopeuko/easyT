@@ -38,7 +38,7 @@ jobs:
           BINANCE_API_KEY: ${{secrets.BINANCE_API_KEY}}
           BINANCE_SECRET_KEY: ${{secrets.BINANCE_SECRET_KEY}}
         run: |
-          coverage run -m pytest --cache-clear --cov-report term-missing --cov=easyT > pytest-coverage.txt
+          coverage run -m pytest --cache-clear --cov-report term-missing --cov=easyT
 
       # Try to publish to Test Pypi
       - name: Publish distribution to Test PyPI
