@@ -325,7 +325,7 @@ class Manager:
             'binance-spot'
             >>> manager.get_initialize()
             <binanceSpotEasyT.initialization.Initialize object>
-            >>> # It is important to know that the supervise needs the time set.
+            >>> # It is important to know that supervise needs the time set.
             >>> manager.supervise()
             TypeError: '<=' not supported between instances of 'datetime.datetime' and 'NoneType'
             >>> manager.set_trading_time(time_trade_start='09:00', time_trade_stop='17:30', time_position_close='17:45')
@@ -338,7 +338,10 @@ class Manager:
         """
         self._supervise_updates()
 
-        self.time = datetime.fromtimestamp(self.tick.time)
+        if isinstance(self.tick.time, datetime):
+            self.time = self.tick.time
+        else:
+            self.time = datetime.fromtimestamp(self.tick.time)
 
         self._supervise_trading_time()
 
