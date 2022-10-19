@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from easyT.tick import get_tick
 from dateutil.parser import parse
 from easyT.rates import get_rates
@@ -336,7 +338,7 @@ class Manager:
         """
         self._supervise_updates()
 
-        self.time = self.tick.time
+        self.time = datetime.fromtimestamp(self.tick.time)
 
         self._supervise_trading_time()
 
