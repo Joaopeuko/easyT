@@ -66,6 +66,16 @@ pip install easyT
 
 That is it! The first steps are completed!
 
+ - #### Q: What do I do now? How I use it?
+
+Simple, type ```easyt``` on your terminal, and it will generate a ```demo.py``` file!
+If you prefer, you can give to it a different name, just typing:
+
+```easyt --file_name example``` generates:
+```example.py```
+
+```easyt --file_name test_file``` generates:
+```test_file.py```
 
 # Libraries Documentation
 
