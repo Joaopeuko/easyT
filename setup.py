@@ -8,7 +8,7 @@ with open("requirements.txt", "r") as requirements_file:
 
 setuptools.setup(
     name='easyT',
-    version='0.0.3',
+    version='0.0.4',
     license='MIT',
     author="Joao Paulo Euko",
     url='https://github.com/Joaopeuko/easyT',
