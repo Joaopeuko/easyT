@@ -1,24 +1,24 @@
 from datetime import datetime
 
-from easyT.tick import get_tick
 from dateutil.parser import parse
-from easyT.rates import get_rates
-from easyT.trade import get_trade
-from easyT.platforms import Platforms
 from supportLibEasyT import log_manager
-from easyT.timeframe import get_timeframe
+
 from easyT.initialization import get_initialize
+from easyT.platforms import Platforms
+from easyT.rates import get_rates
+from easyT.tick import get_tick
+from easyT.timeframe import get_timeframe
+from easyT.trade import get_trade
 
 
 class ClassNotInvoked(BaseException):
-    """ Raise this error when the class is called but not invoked first!"""
+    """Raise this error when the class is called but not invoked first!"""
 
 
 class Manager:
     def __init__(self):
-
-        self._log = log_manager.LogManager('easyt')
-        self._log.logger.info('Logger Initialized in Manager')
+        self._log = log_manager.LogManager("easyt")
+        self._log.logger.info("Logger Initialized in Manager")
 
         self.platform = None
         self.timeframe = None
@@ -71,10 +71,11 @@ class Manager:
 
 
         """
-        self._log.logger.info(f'allowed_to_trade called')
+        self._log.logger.info(f"allowed_to_trade called")
         if self.trade is None:
-            self._log.logger.error(f'allowed_to_trade was called but trade class was not invoked,'
-                                   f' call get_trade first!')
+            self._log.logger.error(
+                f"allowed_to_trade was called but trade class was not invoked," f" call get_trade first!"
+            )
             raise ClassNotInvoked
 
         else:
@@ -103,7 +104,7 @@ class Manager:
 
 
         """
-        self._log.logger.info(f'Setting platform to {platform}')
+        self._log.logger.info(f"Setting platform to {platform}")
 
         self.platform = platform
         return self.platform
@@ -137,10 +138,12 @@ class Manager:
             >>> manager.set_trading_time(time_trade_start='09:00', time_trade_stop='17:30', time_position_close='17:45')
 
         """
-        self._log.logger.info(f'set_trading_time for the times:'
-                              f'Start: {time_trade_start}, '
-                              f'Stop: {time_trade_stop}, '
-                              f'Close Position {time_position_close}')
+        self._log.logger.info(
+            f"set_trading_time for the times:"
+            f"Start: {time_trade_start}, "
+            f"Stop: {time_trade_stop}, "
+            f"Close Position {time_position_close}"
+        )
 
         self.time_trade_start = time_trade_start
         self.time_trade_stop = time_trade_stop
@@ -165,7 +168,7 @@ class Manager:
             <binanceSpotEasyT.initialization.Initialize object>
 
         """
-        self._log.logger.info(f'Get Initialize()')
+        self._log.logger.info(f"Get Initialize()")
         self.initialize = get_initialize(self._log, self.platform)
         return self.initialize
 
@@ -203,7 +206,7 @@ class Manager:
 
         """
 
-        self._log.logger.info(f'Get Rates()')
+        self._log.logger.info(f"Get Rates()")
         self.rates = get_rates(self._log, self.platform, count=count, symbol=symbol, timeframe=timeframe)
         self.rates.update_rates()
         return self.rates
@@ -233,7 +236,7 @@ class Manager:
             <binanceSpotEasyT.tick.Tick object>
 
         """
-        self._log.logger.info(f'Get Tick()')
+        self._log.logger.info(f"Get Tick()")
         self.tick = get_tick(self._log, self.platform, symbol.upper())
         self.tick.get_new_tick()
         return self.tick
@@ -259,7 +262,7 @@ class Manager:
             <binanceSpotEasyT.timeframe.TimeFrame object>
 
         """
-        self._log.logger.info(f'Get TimeFrame()')
+        self._log.logger.info(f"Get TimeFrame()")
         return get_timeframe(self._log, self.platform)
 
     def get_trade(self, symbol, lot, stop_loss, take_profit):
@@ -303,37 +306,37 @@ class Manager:
             <binanceSpotEasyT.trade.Trade object>
 
         """
-        self._log.logger.info(f'Getting Trade()')
+        self._log.logger.info(f"Getting Trade()")
         self.trade = get_trade(self._log, self.platform, symbol, lot, stop_loss, take_profit)
         return self.trade
 
     def supervise(self):
         """
-        These functions should be calling inside the while True looping, it is responsible to updates information like
-        if the AlgoTrading is allowed to trade, if it needs to close the position, and to update the tick
-        and the rates' information.
+         These functions should be calling inside the while True looping, it is responsible to updates information like
+         if the AlgoTrading is allowed to trade, if it needs to close the position, and to update the tick
+         and the rates' information.
 
-        Returns:
-            It updates attribute values.
+         Returns:
+             It updates attribute values.
 
-       Examples:
+        Examples:
 
-            >>> from easyT.manager import Manager
-            >>> symbol = 'BTCUSDT'
-            >>> manager = Manager()
-            >>> manager.set_platform('binance-spot')
-            'binance-spot'
-            >>> manager.get_initialize()
-            <binanceSpotEasyT.initialization.Initialize object>
-            >>> # It is important to know that supervise needs the time set.
-            >>> manager.supervise()
-            TypeError: '<=' not supported between instances of 'datetime.datetime' and 'NoneType'
-            >>> manager.set_trading_time(time_trade_start='09:00', time_trade_stop='17:30', time_position_close='17:45')
-            >>> # It is important to know that it do not only need the trading time, but also, it needs the Tick() class
-            >>> # to retrieve the time!
-            >>> manager.get_tick(symbol=symbol)
-            <binanceSpotEasyT.tick.Tick object>
-            >>> manager.supervise()
+             >>> from easyT.manager import Manager
+             >>> symbol = 'BTCUSDT'
+             >>> manager = Manager()
+             >>> manager.set_platform('binance-spot')
+             'binance-spot'
+             >>> manager.get_initialize()
+             <binanceSpotEasyT.initialization.Initialize object>
+             >>> # It is important to know that supervise needs the time set.
+             >>> manager.supervise()
+             TypeError: '<=' not supported between instances of 'datetime.datetime' and 'NoneType'
+             >>> manager.set_trading_time(time_trade_start='09:00', time_trade_stop='17:30', time_position_close='17:45')
+             >>> # It is important to know that it do not only need the trading time, but also, it needs the Tick() class
+             >>> # to retrieve the time!
+             >>> manager.get_tick(symbol=symbol)
+             <binanceSpotEasyT.tick.Tick object>
+             >>> manager.supervise()
 
         """
         self._supervise_updates()

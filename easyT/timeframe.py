@@ -1,7 +1,7 @@
 from supportLibEasyT.log_manager import LogManager
 
-from easyT.platforms import Platforms
 from easyT.platforms import NoPlatformFound
+from easyT.platforms import Platforms
 
 
 def get_timeframe(log: LogManager, platform):
@@ -26,26 +26,28 @@ def get_timeframe(log: LogManager, platform):
         You can find an example of the TimeFrame usage in update_rates() function in Rates documentation
 
     """
-    log.logger.info('get_timeframe called')
+    log.logger.info("get_timeframe called")
     platforms = Platforms()
 
     if platform == platforms.BINANCE_SPOT:
-
-        log.logger.info(f'It is returning the platform {platforms.BINANCE_SPOT}.')
+        log.logger.info(f"It is returning the platform {platforms.BINANCE_SPOT}.")
 
         from binanceSpotEasyT.timeframe import TimeFrame
+
         return TimeFrame()
 
     elif platform == platforms.METATRADER5:
-
-        log.logger.info(f'It is returning the platform {platforms.METATRADER5}.')
+        log.logger.info(f"It is returning the platform {platforms.METATRADER5}.")
 
         from metatrader5EasyT.timeframe import TimeFrame
+
         return TimeFrame()
 
     else:
-        log.logger.error(f'The {platform} was not found, you can only use these options {platforms.__dict__.keys()}'
-                         f'of type Platform or the values {platforms.__dict__.values()} of type string, '
-                         f'both are acceptable.')
+        log.logger.error(
+            f"The {platform} was not found, you can only use these options {platforms.__dict__.keys()}"
+            f"of type Platform or the values {platforms.__dict__.values()} of type string, "
+            f"both are acceptable."
+        )
 
         raise NoPlatformFound

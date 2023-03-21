@@ -1,7 +1,7 @@
 from supportLibEasyT.log_manager import LogManager
 
-from easyT.platforms import Platforms
 from easyT.platforms import NoPlatformFound
+from easyT.platforms import Platforms
 
 
 def get_tick(log: LogManager, platform, symbol: str):
@@ -25,26 +25,28 @@ def get_tick(log: LogManager, platform, symbol: str):
         It returns the right class that will be used or an error message in case it was not found
 
     """
-    log.logger.info('get_tick called')
+    log.logger.info("get_tick called")
     platforms = Platforms()
 
     if platform == platforms.BINANCE_SPOT:
-
-        log.logger.info(f'It is returning the platform {platforms.BINANCE_SPOT}.')
+        log.logger.info(f"It is returning the platform {platforms.BINANCE_SPOT}.")
 
         from binanceSpotEasyT.tick import Tick
+
         return Tick(symbol)
 
     elif platform == platforms.METATRADER5:
-
-        log.logger.info(f'It is returning the platform {platforms.METATRADER5}.')
+        log.logger.info(f"It is returning the platform {platforms.METATRADER5}.")
 
         from metatrader5EasyT.tick import Tick
+
         return Tick(symbol)
 
     else:
-        log.logger.error(f'The {platform} was not found, you can only use these options {platforms.__dict__.keys()}'
-                         f'of type Platform or the values {platforms.__dict__.values()} of type string, '
-                         f'both are acceptable.')
+        log.logger.error(
+            f"The {platform} was not found, you can only use these options {platforms.__dict__.keys()}"
+            f"of type Platform or the values {platforms.__dict__.values()} of type string, "
+            f"both are acceptable."
+        )
 
         raise NoPlatformFound

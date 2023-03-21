@@ -1,11 +1,18 @@
 from dotenv import load_dotenv
 from supportLibEasyT.log_manager import LogManager
 
-from easyT.platforms import Platforms
 from easyT.platforms import NoPlatformFound
+from easyT.platforms import Platforms
 
 
-def get_trade(log: LogManager, platform, symbol: str, lot: float, stop_loss: float, take_profit: float):
+def get_trade(
+    log: LogManager,
+    platform,
+    symbol: str,
+    lot: float,
+    stop_loss: float,
+    take_profit: float,
+):
     """
     This function return the class that responsible is responsible to handle all the trade requests
 
@@ -43,27 +50,29 @@ def get_trade(log: LogManager, platform, symbol: str, lot: float, stop_loss: flo
         It returns the right class that will be used or an error message in case it was not found
 
     """
-    log.logger.info('get_trade called')
+    log.logger.info("get_trade called")
     platforms = Platforms()
 
     if platform == platforms.BINANCE_SPOT:
-
-        log.logger.info(f'It is returning the platform {platforms.BINANCE_SPOT}.')
+        log.logger.info(f"It is returning the platform {platforms.BINANCE_SPOT}.")
 
         load_dotenv()
         from binanceSpotEasyT.trade import Trade
+
         return Trade(symbol, lot, stop_loss, take_profit)
 
     elif platform == platforms.METATRADER5:
-
-        log.logger.info(f'It is returning the platform {platforms.METATRADER5}.')
+        log.logger.info(f"It is returning the platform {platforms.METATRADER5}.")
 
         from metatrader5EasyT.trade import Trade
+
         return Trade(symbol, lot, stop_loss, take_profit)
 
     else:
-        log.logger.error(f'The {platform} was not found, you can only use these options {platforms.__dict__.keys()}'
-                         f'of type Platform or the values {platforms.__dict__.values()} of type string, '
-                         f'both are acceptable.')
+        log.logger.error(
+            f"The {platform} was not found, you can only use these options {platforms.__dict__.keys()}"
+            f"of type Platform or the values {platforms.__dict__.values()} of type string, "
+            f"both are acceptable."
+        )
 
         raise NoPlatformFound

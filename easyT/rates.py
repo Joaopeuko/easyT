@@ -1,7 +1,7 @@
 from supportLibEasyT.log_manager import LogManager
 
-from easyT.platforms import Platforms
 from easyT.platforms import NoPlatformFound
+from easyT.platforms import Platforms
 
 
 def get_rates(log: LogManager, platform: str, count: int, symbol: str, timeframe):
@@ -34,26 +34,28 @@ def get_rates(log: LogManager, platform: str, count: int, symbol: str, timeframe
 
 
     """
-    log.logger.info('get_rates called')
+    log.logger.info("get_rates called")
     platforms = Platforms()
 
     if platform == platforms.BINANCE_SPOT:
-
-        log.logger.info(f'It is returning the platform {platforms.BINANCE_SPOT}.')
+        log.logger.info(f"It is returning the platform {platforms.BINANCE_SPOT}.")
 
         from binanceSpotEasyT.rates import Rates
+
         return Rates(count=count, symbol=symbol, timeframe=timeframe)
 
     elif platform == platforms.METATRADER5:
-
-        log.logger.info(f'It is returning the platform {platforms.METATRADER5}.')
+        log.logger.info(f"It is returning the platform {platforms.METATRADER5}.")
 
         from metatrader5EasyT.rates import Rates
+
         return Rates(count=count, symbol=symbol, timeframe=timeframe)
 
     else:
-        log.logger.error(f'The {platform} was not found, you can only use these options {platforms.__dict__.keys()}'
-                         f'of type Platform or the values {platforms.__dict__.values()} of type string, '
-                         f'both are acceptable.')
+        log.logger.error(
+            f"The {platform} was not found, you can only use these options {platforms.__dict__.keys()}"
+            f"of type Platform or the values {platforms.__dict__.values()} of type string, "
+            f"both are acceptable."
+        )
 
         raise NoPlatformFound

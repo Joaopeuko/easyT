@@ -4,18 +4,15 @@ import argparse
 def get_arguments():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--file_name",
-                        type=str,
-                        action="store",
-                        default="demo")
+    parser.add_argument("--file_name", type=str, action="store", default="demo")
 
     return vars(parser.parse_args())
 
 
 def main():
-    file_name = get_arguments()['file_name']
+    file_name = get_arguments()["file_name"]
 
-    with open(f'{file_name}.py', 'w') as file:
+    with open(f"{file_name}.py", "w") as file:
         file.write(
             """from easyT.manager import Manager
 from easyT.platforms import Platforms
