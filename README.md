@@ -53,7 +53,6 @@ If you prefer, you can give to it a different name, just typing:
 
 All the Libraries Documentation and useful links are linked below:
 
-- easyT
 
 - easyT - [Documentation](https://www.mydocumentations.com/easyt/index.html) - [GitHub](https://github.com/Joaopeuko/easyT) - [Pypi](https://pypi.org/project/easyT/)
   - binanceSpotEasyT - [Documentation](https://www.mydocumentations.com/binance-spot/index.html) - [GitHub](https://github.com/Joaopeuko/binanceSpotEasyT) - [Pypi](https://pypi.org/project/binanceSpotEasyT/)
