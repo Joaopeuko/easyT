@@ -1066,11 +1066,12 @@
         },
         "tqdm": {
             "hashes": [
-                "sha256:1871fb68a86b8fb3b59ca4cdd3dcccbc7e6d613eeed31f4c332531977b89beb5",
-                "sha256:c4f53a17fe37e132815abceec022631be8ffe1b9381c2e6e30aa70edc99e9671"
+                "sha256:0cd8af9d56911acab92182e88d763100d4788bdf421d251616040cc4d44863be",
+                "sha256:fe5a6f95e6fe0b9755e9469b77b9c3cf850048224ecaa8293d7d2d31f97d869a"
             ],
             "index": "pypi",
-            "version": "==4.65.0"
+            "markers": "python_version >= '3.7'",
+            "version": "==4.67.0"
         },
         "typing-extensions": {
             "hashes": [
